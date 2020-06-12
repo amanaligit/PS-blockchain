@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  BlockChain
+{% endblock %}
+
+{% block body %}
+    <h1>Blockchain</h1>
+    <h2> Length: {{response['length']}} </h2>
+      <div class="container">
+          <div class="row">
+              <div class="col-1">
+                  <h4> Index </h4>
+              </div>
+              <div class="col-4">
+                  <h4> TimeStamp </h4>
+              </div>
+              <div class="col-2">
+                  <h4> Nonce </h4>
+              </div>
+          </div>
+                  {% for block in response['chain'] %}
+            <div class="row">
+                <div class="col-1">
+                  <a href="{{ url_for('get_block', index=block['index']) }}">
+                      {{block['index']}}
+                  </a>
+                </div>
+                <div class="col-4">
+                    {{block['timestamp']}}
+                </div>
+                <div class="col-2">
+                    {{block['nonce']}}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+{% endblock %}
