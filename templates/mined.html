@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Search Results
+{% endblock %}
+
+{% block body %}
+    <h1>Congratulations! You just mined a block!</h1>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-4">
+                    Index
+                </div>
+                <div class="col-8">
+                    {{response['index']}}
+                </div>
+              </div>
+              <div class="row">
+
+                  <div class="col-4">
+                      TimeStamp
+                  </div>
+                  <div class="col-8">
+                      {{response['timestamp']}}
+                  </div>
+                </div>
+              <div class="row">
+
+                    <div class="col-4">
+                        Nonce
+                    </div>
+                    <div class="col-8">
+                        {{response['nonce']}}
+                    </div>
+              </div>
+              <div class="row">
+
+                  <div class="col-4">
+                      Previous Hash
+                  </div>
+                  <div class="col-8">
+                      {{response['previous_hash']}}
+                  </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-4">
+                        Transactions
+                    </div>
+                    <div class="col-8">
+                        {{response['transactions']}}
+                    </div>
+                  </div>
+                  <div class="row">
+
+                      <div class="col-4" color = green>
+                          Hash
+                      </div>
+                      <div class="col-8" color = green>
+                          {{response['hash']}}
+                      </div>
+                    </div>
+
+
+            </div>
+        </div>
+{% endblock %}

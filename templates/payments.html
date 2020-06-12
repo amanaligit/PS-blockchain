@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Login Page
+{% endblock %}
+
+{% block body %}
+    <div class='float-right'> <a href="{{url_for('get_chain')}}" class="btn btn-primary">View the Blockchain</a> </div>
+    <h1>Payments and Customer Relations</h1>
+
+    <form action="{{ url_for('add_payment') }}" method="post">
+
+        <div class="form-group" margin = 20px>
+            <input class="form-control" name="sender" placeholder="Sender ID" margin = 20px>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" name="receiver" placeholder="Reciever ID">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" name="amount" placeholder="Amount in INR">
+        </div>
+        <p>
+          <div class="alert alert-success" role="alert">
+                          Message: {{ message }}
+          </div>
+
+        </p>
+        <div class="form-group">
+          <div class='float-right' margin = 20px > <a href="{{url_for('mine_block')}}" margin = 20px class="btn btn-primary">Mine block</a> </div>
+
+            <button class="btn btn-primary">Add Transaction</button>
+        </div>
+
+{% endblock %}
