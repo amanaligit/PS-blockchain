@@ -6,11 +6,11 @@ import hashlib
 import json
 from flask import Flask, jsonify, request
 import requests
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 from uuid import uuid4
 from urllib.parse import urlparse
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 
