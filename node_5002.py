@@ -20,7 +20,7 @@ class BlockChain:
     def __init__(self):
         self.chain = []
         self.transactions = []
-        self.create_block(mined_block=self.proof_of_work(0))
+        self.create_block(mined_block=self.proof_of_work(0, "origin"))
         self.nodes = set()
 
     def create_block(self, mined_block):
@@ -30,11 +30,12 @@ class BlockChain:
     def get_previous_block(self):
         return self.chain[-1]
 
-    def proof_of_work(self, previous_hash):
+    def proof_of_work(self, previous_hash, type):
         check_proof = False
         block = {'index': len(self.chain) + 1,
                  'timestamp': str(datetime.datetime.now()),
                  'nonce': 1,
+                 'type':type,
                  'previous_hash': previous_hash,
                  'transactions': self.transactions
                  }
@@ -66,17 +67,23 @@ class BlockChain:
             block_index += 1
         return True
 
-    def add_payment(self, sender, receiver, amount, productinfo, location, status, volume):
+    def add_payment(self, sender, receiver):
         self.transactions.append({'sender': sender,
                                   'receiver': receiver,
                                   'amount': amount,
-                                  'productinfo': productinfo,
-                                  'location': location,
-                                  'volume': volume,
-                                  'status': status
                                   })
         previous_block = self.get_previous_block()
         return previous_block['index'] + 1
+
+    def add_inventory(self, productinfo, location, status, volume):
+        self.transactions.append({'productinfo': productinfo,
+                                'location': location,
+                                'status': status,
+                                "volume": volume
+                                })
+        previous_block = self.get_previous_block()
+        return previous_block['index'] + 1
+
 
     def add_node(self, address):
         parsed_url = urlparse(address)
@@ -113,9 +120,9 @@ blockchain = BlockChain()
 
 
 # mining a block
-@app.route('/mine_block', methods=['GET'])
-def mine_block():
-    # blockchain.replace_chain()
+@app.route('/mine_inventory', methods=['GET'])
+def mine_inventory():
+    blockchain.replace_chain()
     #network = blockchain.nodes
     # for node in network:
     # blockchain.transactions = blockchain.transactions + (requests.get(f'http://{node}/get_trans')).json()[
@@ -125,12 +132,13 @@ def mine_block():
     previous_hash = blockchain.hash(previous_block)
 
     #blockchain.add_payment(sender=node_address, receiver='Aman', amount=1)
-    mined_block = blockchain.proof_of_work(previous_hash)
+    mined_block = blockchain.proof_of_work(previous_hash, "inventory")
     blockchain.create_block(mined_block)
     response = {'message': 'Congratulations, you just mined a block!',
                 'index': mined_block['index'],
                 'timestamp': mined_block['timestamp'],
                 'nonce': mined_block['nonce'],
+                'type': mined_block['type'],
                 'previous_hash': mined_block['previous_hash'],
                 'transactions': mined_block['transactions'],
                 'hash': blockchain.hash(mined_block)}
@@ -141,9 +149,14 @@ def mine_block():
 # getting the full BlockChain
 @app.route("/", methods=["GET"])
 def index():
+    nodes= ["http://127.0.0.1:5001",
+            "http://127.0.0.1:5002"]
+
+    for node in nodes:
+        blockchain.add_node(node)
     # render_template("payments.html", message="Please enter Payments detail to continue")
     # render_template("inventory.html", message="Please enter Payments detail to continue")
-    return render_template("inventory.html", message="Please enter inventory detail to continue")
+    return render_template("inventory.html", message="Please enter inventory details to continue")
 
 # introductory page
 #################################
@@ -158,7 +171,7 @@ def get_trans():
 
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
-    # blockchain.replace_chain()
+    blockchain.replace_chain()
 
     response = {'chain': blockchain.chain,
                 'length': len(blockchain.chain)}
@@ -206,7 +219,7 @@ def add_payment():
 @app.route('/manage_inventory', methods=['POST'])
 def manage_inventory():
     productinfo = request.form.get("productinfo")
-    location = request.form.get("location address")
+    location = request.form.get("location")
     volume = request.form.get("volume")
     status = request.form['status']
 
@@ -216,8 +229,7 @@ def manage_inventory():
         return render_template("error.html", message="Please enter a valid quantity")
     if productinfo == "" or location == "":
         return render_template("error.html", message="Please fill all the fields")
-    index = blockchain.add_payment(
-        'unapplicable', 'unapplicable', 'unapplicable', productinfo, location, status, volume)
+    index = blockchain.add_inventory(productinfo, location, status, volume)
     response = f'This information will be added to block {index}'
     return render_template("inventory.html", message=response)
 
@@ -227,7 +239,16 @@ def manage_inventory():
 @app.route("/<int:index>", methods=["GET"])
 def get_block(index):
     block = blockchain.chain[index-1]
-    return render_template("block.html", block=block, hash=blockchain.hash(block))
+    if (block['type']=="origin"):
+        return render_template("block_origin.html", block=block, hash=blockchain.hash(block))
+    elif (block['type']=="inventory"):
+        return render_template("block_inventory.html", block=block, hash=blockchain.hash(block))
+    elif (block['type']=="payment"):
+        return render_template("block_payment.html", block=block, hash=blockchain.hash(block))
+
+
+
+
 
 
 # Decentralizing our cryptocurrency
@@ -261,4 +282,4 @@ def replace_chain():
     return jsonify(response), 200
 
 
-app.run(host='0.0.0.0', port=5001, debug=True)
+app.run(host='0.0.0.0', port=5002, debug=True)
