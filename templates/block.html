@@ -1,33 +1,63 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    View Block
+View Block
 {% endblock %}
 
 {% block body %}
-    <h1> Block Details: </h1>
+<h1> Block Details: </h1>
 
 
-    <ul>
-        <li><h3 color = green> Block Index: {{ block['index'] }} </h3></li>
-        <li><h3 color =green> TimeStamp: {{ block['timestamp'] }} </h3></li>
-        <li><h3 color = red> Nonce: {{ block['nonce'] }} </h3></li>
-        <li><h3 color = green> Preious Hash: {{ block['previous_hash'] }} </h3></li>
-        <li><h3 color = red> Hash: {{ hash }} </h3></li>
-        <li><h3 color = green> Transactions: </h3>
-          <ol>
-        {% for transaction in block['transactions']%}
+<ul>
+  <li>
+    <h3 color=green> Block Index: {{ block['index'] }} </h3>
+  </li>
+  <li>
+    <h3 color=green> TimeStamp: {{ block['timestamp'] }} </h3>
+  </li>
+  <li>
+    <h3 color=red> Nonce: {{ block['nonce'] }} </h3>
+  </li>
+  <li>
+    <h3 color=green> Preious Hash: {{ block['previous_hash'] }} </h3>
+  </li>
+  <li>
+    <h3 color=red> Hash: {{ hash }} </h3>
+  </li>
+  <li>
+    <h3 color=green> Transactions: </h3>
+    <ol>
+      {% for transaction in block['transactions']%}
 
+      <li>
+        <ul>
           <li>
-          <ul>
-           <li> <h4> Sender: {{transaction['sender']}} </h4> </li>
-           <li><h4> Receiver: {{transaction['receiver']}} </h4></li>
-           <li><h4> Amount in INR: {{transaction['amount']}} </h4></li>
-          </ul>
-        </li>
-        </li>
+            <h4> Sender: {{transaction['sender']}} </h4>
+          </li>
+          <li>
+            <h4> Receiver: {{transaction['receiver']}} </h4>
+          </li>
+          <li>
+            <h4> Amount in INR: {{transaction['amount']}} </h4>
+          </li>
+          <li>
+            <h4> Product information: {{transaction['productinfo']}} </h4>
+          </li>
+          <li>
+            <h4> Warehouse information: {{transaction['location']}} </h4>
+          </li>
+          <li>
+            <h4> Order Status: {{transaction['status']}} </h4>
+          </li>
+          <li>
+            <h4> Quantity : {{transaction['volume']}} </h4>
+          </li>
 
-        {% endfor %}
-        </ol>
-    </ul>
-    {% endblock %}
+        </ul>
+      </li>
+  </li>
+
+  {% endfor %}
+  </ol>
+</ul>
+{% endblock %}
