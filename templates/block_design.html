@@ -5,7 +5,7 @@ View Block
 {% endblock %}
 
 {% block body %}
-<h1 color="blue"> Block Details: </h1>
+<h1 color = blue> Block Details: </h1>
 
 
 <ul>
@@ -32,25 +32,13 @@ View Block
     <h3 color=green> Transactions: </h3>
     <ol>
       {% for transaction in block['transactions']%}
+      <p>
+        <li>
+            <h4> Design Title: {{transaction['name']}} </h4>
 
-      <li>
-        <ul>
-        <li>
-          <h4> Product Name: {{transaction['productinfo']}} </h4>
+            <img src= "{{url_for('static', filename = transaction['filename'])}}" alt="Alternative Text" width = "75%">
         </li>
-        <li>
-          <h4> Warehouse Name / Location: {{transaction['location']}} </h4>
-        </li>
-        <li>
-          <h4> Order Status: {{transaction['status']}} </h4>
-        </li>
-        <li>
-          <h4> Quantity : {{transaction['volume']}} </h4>
-        </li>
-
-        </ul>
-      </li>
-  </li>
+      </p>
 
   {% endfor %}
   </ol>

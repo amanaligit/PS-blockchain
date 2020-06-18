@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{%block title%}
+Manufacturing Processes
+{% endblock %}
+
+{% block body %}
+<div class='float-right'> <a href="{{url_for('get_chain')}}" class="btn btn-primary">View the Blockchain</a> </div>
+<h1 color = "Blue">Manufacturing Processes</h1>
+<form action="{{ url_for('add_manu') }}" method="post">
+
+  <div class="form-group" margin=20px>
+    <input class="form-control" name="productinfo" placeholder="name of the product" margin=20px>
+  </div>
+
+  <div class="form-group">
+    <input class="form-control" name="num" placeholder="product number">
+  </div>
+
+<p>
+  <div action="">
+    <h4> Check The processes performed: </h4>
+    <input type="checkbox" name="process" value="Paint Job"> Paint Job <br>
+    <input type="checkbox" name="process" value="Trim Line"> Trim Line <br>
+    <input type="checkbox" name="process" value="Engine Assembly"> Engine Assembly <br>
+    <input type="checkbox" name="process" value="Axis Assembly"> Axis Assembly<br>
+    <input type="checkbox" name="process" value="Gearbox Assembly"> Gearbox Assembly <br>
+    <input type="checkbox" name="process" value="Weld Shop"> Weld Shop <br>
+    <input type="checkbox" name="process" value="Body Mounting"> Body Mounting <br>
+    <input type="checkbox" name="process" value="Final Assembly"> Final Assembly<br>
+  </div>
+</p>
+
+  <p>
+  <div class="alert alert-success" role="alert">
+    Message: {{ message }}
+  </div>
+
+  </p>
+  <div class="form-group">
+    <div class='float-right' margin=20px> <a href="{{url_for('mine_manu')}}" margin=20px class="btn btn-primary">Mine
+        block</a> </div>
+
+    <button class="btn btn-primary">Add to record</button>
+  </div>
+  {% endblock %}

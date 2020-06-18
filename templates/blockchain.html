@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Blockchain</h1>
-    <h2> Length: {{response['length']}} </h2>
+    <h1 color = "blue">Blockchain</h1>
+    <h3> Length: {{response['length']}} </h2>
       <div class="container">
           <div class="row">
               <div class="col-1">
@@ -18,19 +18,30 @@
               <div class="col-2">
                   <h4> Nonce </h4>
               </div>
+              <div class="col-2">
+                  <h4> Type </h4>
+              </div>
+              <div class="col-2">
+                  <h4> View Block </h4>
+              </div>
+
           </div>
                   {% for block in response['chain'] %}
             <div class="row">
                 <div class="col-1">
-                  <a href="{{ url_for('get_block', index=block['index']) }}">
                       {{block['index']}}
-                  </a>
                 </div>
                 <div class="col-4">
                     {{block['timestamp']}}
                 </div>
                 <div class="col-2">
                     {{block['nonce']}}
+                </div>
+                <div class="col-2">
+                  {{block['type']}}
+                </div>
+                <div class="col-2 align-self-center" >
+                  <a href="{{ url_for('get_block', index=block['index']) }}" margin = 20px class="btn btn-primary">View Block {{block['index']}}</a>
                 </div>
             </div>
             {% endfor %}

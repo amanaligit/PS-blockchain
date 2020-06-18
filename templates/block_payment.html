@@ -5,7 +5,7 @@ View Block
 {% endblock %}
 
 {% block body %}
-<h1> Block Details: </h1>
+<h1 color = "blue"> Block Details: </h1>
 
 
 <ul>
@@ -22,7 +22,7 @@ View Block
     <h3 color=red> Nonce: {{ block['nonce'] }} </h3>
   </li>
   <li>
-    <h3 color=green> Preious Hash: {{ block['previous_hash'] }} </h3>
+    <h3 color=green> Previous Hash: {{ block['previous_hash'] }} </h3>
   </li>
   <li>
     <h3 color=red> Hash: {{ hash }} </h3>

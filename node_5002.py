@@ -150,7 +150,9 @@ def mine_inventory():
 @app.route("/", methods=["GET"])
 def index():
     nodes= ["http://127.0.0.1:5001",
-            "http://127.0.0.1:5002"]
+            "http://127.0.0.1:5002",
+            "http://127.0.0.1:5003",
+            "http://127.0.0.1:5004"]
 
     for node in nodes:
         blockchain.add_node(node)
@@ -245,41 +247,8 @@ def get_block(index):
         return render_template("block_inventory.html", block=block, hash=blockchain.hash(block))
     elif (block['type']=="payment"):
         return render_template("block_payment.html", block=block, hash=blockchain.hash(block))
-
-
-
-
-
-
-# Decentralizing our cryptocurrency
-
-
-# connecting new nodes
-@app.route('/connect_node', methods=['POST'])
-def connect_node():
-    json = request.get_json()
-    nodes = json.get('nodes')
-    if nodes is None:
-        return "No nodes!", 400
-    for node in nodes:
-        blockchain.add_node(node)
-    response = {
-        "message": "All the nodes are now connected, The zcoin blockchain contains the following number of nodes:",
-        "total_nodes": list(blockchain.nodes)}
-    return jsonify(response), 201
-
-
-@app.route('/replace_chain', methods=['GET'])
-def replace_chain():
-    is_chain_replaced = blockchain.replace_chain()
-    if is_chain_replaced is True:
-        response = {'message': 'chain was replaced with the longest chain!',
-                    'newchain': blockchain.chain}
-    else:
-        response = {'message': 'chain is upto date!',
-                    'newchain': blockchain.chain}
-
-    return jsonify(response), 200
-
-
+    elif (block['type']=="design"):
+        return render_template("block_design.html", block=block, hash=blockchain.hash(block))
+    elif (block['type']=="manufacturing"):
+        return render_template("block_manu.html", block=block, hash=blockchain.hash(block))
 app.run(host='0.0.0.0', port=5002, debug=True)

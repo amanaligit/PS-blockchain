@@ -175,7 +175,9 @@ def mine_payment():
 @app.route("/", methods=["GET"])
 def index():
     nodes= ["http://127.0.0.1:5001",
-            "http://127.0.0.1:5002"]
+            "http://127.0.0.1:5002",
+            "http://127.0.0.1:5003",
+            "http://127.0.0.1:5004"]
 
     for node in nodes:
         blockchain.add_node(node)
@@ -201,6 +203,7 @@ def get_chain():
     response = {'chain': blockchain.chain,
                 'length': len(blockchain.chain)}
     return render_template("blockchain.html", response=response)
+
 
 
 @app.route('/get_curr_chain', methods=['GET'])
@@ -269,8 +272,10 @@ def get_block(index):
         return render_template("block_inventory.html", block=block, hash=blockchain.hash(block))
     elif (block['type']=="payment"):
         return render_template("block_payment.html", block=block, hash=blockchain.hash(block))
-
-
+    elif (block['type']=="design"):
+        return render_template("block_design.html", block=block, hash=blockchain.hash(block))
+    elif (block['type']=="manufacturing"):
+        return render_template("block_manu.html", block=block, hash=blockchain.hash(block))
 
 
 

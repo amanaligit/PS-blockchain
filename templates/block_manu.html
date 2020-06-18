@@ -15,7 +15,6 @@ View Block
   <li>
         <h3 color=green> Block Type: {{ block['type'] }} </h3>
   </li>
-
   <li>
     <h3 color=green> TimeStamp: {{ block['timestamp'] }} </h3>
   </li>
@@ -35,18 +34,20 @@ View Block
 
       <li>
         <ul>
-        <li>
-          <h4> Product Name: {{transaction['productinfo']}} </h4>
-        </li>
-        <li>
-          <h4> Warehouse Name / Location: {{transaction['location']}} </h4>
-        </li>
-        <li>
-          <h4> Order Status: {{transaction['status']}} </h4>
-        </li>
-        <li>
-          <h4> Quantity : {{transaction['volume']}} </h4>
-        </li>
+          <li>
+            <h4> Name of the product: {{transaction['productinfo']}} </h4>
+          </li>
+          <li>
+            <h4> Product Number: {{transaction['num']}} </h4>
+          </li>
+          <li>
+            <h4> Processes Completed: </h4>
+            <ul>
+                {% for process in transaction['process']%}
+                <li> <h5> {{process}} </h5> </li>
+                {% endfor %}
+            </ul>
+          </li>
 
         </ul>
       </li>
