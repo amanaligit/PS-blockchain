@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{%block title%}
+LOGIN PAGE
+{% endblock %}
+
+{% block body %}
+<div class='float-right'> <a href="{{url_for('get_chain')}}" class="btn btn-primary">View the Blockchain</a> </div>
+<h1>Inventory Management</h1>
+<form action="{{ url_for('manage_inventory') }}" method="post">
+
+  <div class="form-group" margin=20px>
+    <input class="form-control" name="productinfo" placeholder="name of the product" margin=20px>
+  </div>
+
+  <div class="form-group">
+    <input class="form-control" name="location" placeholder="warehouse information/location">
+  </div>
+
+
+  <div action="">
+    <input type="radio" name="status" value="oreder recieved ">Order Recieved<br>
+    <input type="radio" name="status" value="order dispatched">Order dispatched
+  </div>
+
+
+
+
+  <div class="form-group">
+    <input class="form-control" name="volume" placeholder="quantity to  be added">
+  </div>
+  <p>
+  <div class="alert alert-success" role="alert">
+    Message: {{ message }}
+  </div>
+
+  </p>
+  <div class="form-group">
+    <div class='float-right' margin=20px> <a href="{{url_for('mine_block')}}" margin=20px class="btn btn-primary">Mine
+        block</a> </div>
+
+    <button class="btn btn-primary">Add to record</button>
+  </div>
+  {% endblock %}
