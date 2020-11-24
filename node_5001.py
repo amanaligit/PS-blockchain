@@ -1,5 +1,6 @@
 # module 2-creating a cryptocurrency
 # we need requests library ver 2.18.4
+#testing git on windows
 
 import datetime
 import hashlib
