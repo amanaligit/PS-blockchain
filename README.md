@@ -1,5 +1,6 @@
 # PS-blockchain
-for PS blockchain stuff
 
-Run all nodes as seperate servers using flask or python3.
-All blocks added to one particular node will reflect on all other nodes.
+A Block-chain with secure transactions made from scratch. The block-chain is decentralized, and the network consists of multiple
+nodes, each simulating a specific task in a car manufacturing firm.
+Tech Stack: Python (Flask framework)
+
